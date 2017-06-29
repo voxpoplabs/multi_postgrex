@@ -66,3 +66,8 @@ defmodule DynamicPostgrexAdapter do
 
 end
 ```
+
+```
+DynamicPostgrexAdapter.query_database("sales", "SELECT * FROM orders", [])
+```
+
