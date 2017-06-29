@@ -30,3 +30,39 @@ MultiPostgrexex.query(
   []
 )
 ```
+
+### Advanced Usage
+
+This example would allow you to store multiple configurations in Redis and access them on the fly.
+You could dynamically associate objects with a database and establish connections at runtime for querying.
+
+```elixir
+defmodule DynamicPostgrexAdapter do
+
+  def query_database(database_name, sql, args) do
+    setup_postgrex(database_name)
+    |> MultiPostgrex.query(sql, args)
+  end
+
+  def setup_postgrex(database_name) do
+    %{
+      name: String.to_atom("postgrex_reporting_store_#{database_name}"),
+      get_connection_info: fn () ->
+        get_connection_info(database_name)
+      end
+    }
+  end
+
+  def get_connection_info(database_name) do
+    connection_info = Redis.get("#{database_name}_connection_info")
+    %{
+      hostname: connection_info["database_host"],
+      database: connection_info["database_name"],
+      port: connection_info["database_port"],
+      username: connection_info["database_username"]
+      password: connection_info["database_password"]
+    }
+  end
+
+end
+```
