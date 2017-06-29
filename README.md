@@ -67,7 +67,7 @@ defmodule DynamicPostgrexAdapter do
 end
 ```
 
-```
+```elixir
 DynamicPostgrexAdapter.query_database("sales", "SELECT * FROM orders", [])
 ```
 
