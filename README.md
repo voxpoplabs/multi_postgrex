@@ -16,7 +16,7 @@ end
 ## Usage
 
 ```elixir
-MultiPostgrexex.query(
+MultiPostgrex.query(
   %{
     name: :user_database,
     get_connection_information: fn () ->
