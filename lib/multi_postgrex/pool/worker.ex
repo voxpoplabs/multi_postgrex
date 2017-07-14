@@ -21,7 +21,8 @@ defmodule MultiPostgrex.Pool.Worker do
         port: connection_options[:port],
         username: connection_options[:username] || "",
         password: connection_options[:password] || "",
-        database: connection_options[:database] || ""
+        database: connection_options[:database] || "",
+        timeout: connection_options[:timeout]
       )
 
       client
