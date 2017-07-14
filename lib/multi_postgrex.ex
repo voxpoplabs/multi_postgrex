@@ -8,7 +8,7 @@ defmodule MultiPostgrex do
       :poolboy.transaction(postgrex_setup[:name], fn(worker) ->
 
         # Send the command to the worker genserver which has the connection running
-        GenServer.call(worker, %{sql: sql, args: args})
+        GenServer.call(worker, %{sql: sql, args: args}, postgrex_setup[:timeout] || 5000)
       end, postgrex_setup[:timeout] || 5000)
     end
   end
