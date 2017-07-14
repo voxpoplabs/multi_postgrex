@@ -9,7 +9,7 @@ defmodule MultiPostgrex do
 
         # Send the command to the worker genserver which has the connection running
         GenServer.call(worker, %{sql: sql, args: args})
-      end, 5000)
+      end, postgrex_setup[:timeout] || 5000)
     end
   end
 
