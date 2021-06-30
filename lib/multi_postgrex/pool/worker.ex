@@ -46,14 +46,14 @@ defmodule MultiPostgrex.Pool.Worker do
   @doc false
   def handle_call(%{sql: sql, args: args}, _from, %{conn: nil, connection_options: connection_options}) do
     conn = Connector.connect(connection_options)
-    results = Postgrex.query!(conn, sql, args)
+    results = Postgrex.query!(conn, sql, args, timeout: connection_options[:timeout])
     {:reply, results, %{conn: conn, connection_options: connection_options}}
   end
 
   @doc false
   def handle_call(%{sql: sql, args: args}, _from, %{conn: conn, connection_options: connection_options}) do
     conn = Connector.ensure_connection(conn, connection_options)
-    results = Postgrex.query!(conn, sql, args)
+    results = Postgrex.query!(conn, sql, args, timeout: connection_options[:timeout])
     {:reply, results, %{conn: conn, connection_options: connection_options}}
   end
 
